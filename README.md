@@ -23,12 +23,16 @@ A full cycle moves $185,000 of fees through the box.
 
 The site ships pre-launch and says so. With no contract address configured:
 
-- the counter reads **zero**, behind an "awaiting launch" tag
-- the ledger is **empty**, with an explicit "no box has opened yet" state
-- the only figures that ever move are the ones a visitor starts themselves
-  with the **Watch it fill** control, and they are generated entirely in the
-  browser — the line directly under that control says so, and the ledger
-  marks its rows "simulated" while they are there
+- the page is tagged **"awaiting launch"**
+- the box runs a **preview of the mechanic on load** — it fills, opens at a
+  mark, and starts again — so the object does something instead of sitting at
+  zero
+- every figure that preview produces is generated **in the browser**, and the
+  page says so in three places: the line directly under the hero controls, the
+  **Stop the preview** control itself, and the chip on the ledger reading
+  "simulated — no box has opened yet"
+- stopping the preview returns the site to the true state: counter at zero,
+  box sealed, ledger empty
 
 That control exists to solve a real problem — an empty box is a weak hero on
 day one — without the usual fix of seeding the page with volume that never

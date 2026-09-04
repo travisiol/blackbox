@@ -71,7 +71,7 @@ const entries = [
     q: "Is anything on this page live yet?",
     a: isLive
       ? "Yes. The counter, the marks and the ledger are read from the contract."
-      : "No, and the page says so rather than filling itself in. The counter reads zero because no trade has happened. The ledger is empty because no box has opened. The only moving figures you can see are the ones you start yourself with the ‘watch it fill’ control, and those are generated in your browser purely to show what the mechanic looks like.",
+      : "No. Nothing has traded, no box has filled and no box has opened. What you can see moving at the top of the page is a preview of the mechanic, running so that the object does something rather than sitting at zero — those figures are generated in your browser, they are not read off any chain, and you can stop it with the control under the pitch. The moment there is a contract, the same counter reads from it and the preview is gone.",
   },
 ] as const;
 

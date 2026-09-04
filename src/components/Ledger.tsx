@@ -28,9 +28,13 @@ export function Ledger() {
             <Label className="mb-3 block">The ledger</Label>
             <h2 className="type-display text-chalk">Every opening, kept</h2>
           </div>
+          {/* These rows come from the preview running at the top of the page,
+              not from a chain. With the preview starting on its own, this chip
+              is the only thing standing between a visitor and the belief that
+              these openings happened — so it says so outright. */}
           {isSimulating && openings.length > 0 && (
             <span className="type-label border border-edge px-2.5 py-1.5 text-chalk-soft">
-              Simulated
+              Simulated — no box has opened yet
             </span>
           )}
         </div>

@@ -47,7 +47,10 @@ interface BoxState {
   progress: number;
   /** Every opening so far. Empty until something has actually opened. */
   openings: Opening[];
-  /** True while the simulation is driving the numbers rather than a chain. */
+  /**
+   * True while the simulation is driving the numbers rather than a chain.
+   * Starts true whenever there is no live contract to read instead.
+   */
   isSimulating: boolean;
   /** Live contract wired up? Gates every claim the page makes. */
   isLive: boolean;
@@ -82,7 +85,25 @@ export function BoxStateProvider({ children }: { children: ReactNode }) {
   const [cleared, setCleared] = useState(0);
   const [serial, setSerial] = useState(1);
   const [openings, setOpenings] = useState<Opening[]>([]);
-  const [isSimulating, setIsSimulating] = useState(false);
+
+  /*
+   * The preview runs on arrival rather than waiting to be asked. An empty box
+   * is a weak first impression, and the whole point of the object is that it
+   * moves — a visitor who never presses anything should still see it work.
+   *
+   * `isLive` is resolved from env at build time, so this initialiser produces
+   * the same value on the server and on the client and cannot desync at
+   * hydration. It is deliberately NOT set from an effect: that would render
+   * one frame of a dead box before the first tick.
+   *
+   * Running by default puts the weight of the disclosure on the copy instead
+   * of on the visitor's own click, which is why the line under the controls
+   * says outright that the figures are generated in the browser, why the stop
+   * control stays visible, and why the ledger marks its rows simulated. The
+   * stop control is also what keeps an auto-running readout acceptable for
+   * anyone who does not want moving content on the page.
+   */
+  const [isSimulating, setIsSimulating] = useState(!isLive);
 
   const target = thresholds[Math.min(cleared, thresholds.length - 1)];
   const isOpen = filled >= target.amountUsd;

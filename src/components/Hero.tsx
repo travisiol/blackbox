@@ -22,17 +22,20 @@ const HOLDER_PCT = 100 - BUYBACK_PCT;
  *
  * The hardest problem here is not the layout, it is that on day one the box
  * is empty. An empty hero at the exact moment a visitor is deciding whether
- * to care is a real cost, and the usual fix — seeding it with invented
- * volume — is a lie told at the top of the page. So the default stays honest
- * (zero, sealed, awaiting launch) and the fill is put behind a control the
- * visitor presses themselves. They get to watch the mechanic work; nobody
- * gets told it already has.
+ * to care is a real cost — so the box runs a preview of the mechanic from the
+ * moment the page loads, filling and opening on its own.
+ *
+ * That buys the first impression at a price, and the price has to be paid
+ * honestly. The usual version of this — seeding the page with invented volume
+ * and saying nothing — is a lie told at the top of a site. This one says what
+ * it is in three places a reader cannot miss: the line directly under these
+ * controls, the control itself, and the chip on the ledger. Stopping the
+ * preview drops the whole site back to the true state, zero and sealed, which
+ * is the test of whether the labelling was real.
  *
  * The badge is a status, not a disclaimer: it says "awaiting launch" whether
- * or not the demo is running, and the dot beside it is what separates a box
- * taking trades from a box sitting still. The disclosure that the moving
- * figures are generated in the browser lives in the line under the control
- * that starts them, which is where somebody who just pressed it is looking.
+ * or not the preview is running, and the dot beside it is what separates a box
+ * taking trades from a box sitting still.
  */
 export function Hero() {
   const {
@@ -90,21 +93,25 @@ export function Hero() {
             Then it reseals, empty, and the next mark is higher.
           </p>
 
+          {/* The box already runs on arrival, so "watch it fill" is no longer
+              the thing to ask for — the primary action becomes the one a
+              visitor who has just been caught by the object actually wants.
+              The stop control stays, quietly, because a readout that moves on
+              its own has to be stoppable. */}
           <div className="mt-9 flex flex-wrap items-center gap-3">
+            <Button onClick={() => scrollTo("mechanic")}>How it works</Button>
             <Button
+              variant="quiet"
               onClick={isSimulating ? stopSimulation : startSimulation}
               aria-pressed={isSimulating}
             >
-              {isSimulating ? "Stop the simulation" : "Watch it fill"}
-            </Button>
-            <Button variant="quiet" onClick={() => scrollTo("mechanic")}>
-              How it works
+              {isSimulating ? "Stop the preview" : "Watch it fill"}
             </Button>
           </div>
 
-          <p className="type-data mt-5 max-w-[44ch] text-chalk-muted">
+          <p className="type-data mt-5 max-w-[46ch] text-chalk-muted">
             {isSimulating
-              ? "These figures are generated in your browser to demonstrate the mechanic. Nothing here is a reading off a chain."
+              ? "The box above is running a preview of the mechanic. Those figures are generated in your browser — nothing is being read off a chain, and no trade has happened yet."
               : "The counter reads zero because no trade has happened yet. Press ‘watch it fill’ to see what one cycle looks like."}
           </p>
         </div>
